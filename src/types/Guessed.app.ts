@@ -1,3 +1,5 @@
+import { ReactWrapper, ShallowWrapper } from "enzyme";
+
 // for component Congrats
 export type CongratsProps = {
     success: boolean;
@@ -14,4 +16,6 @@ export type GuessedWordsProps = {
     guessedWords: Array<GuessedWord>;
 };
 
+// for testing purposes (enzyme)
+export type WrapperType = ShallowWrapper | ReactWrapper;
 

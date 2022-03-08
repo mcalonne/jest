@@ -1,15 +1,17 @@
 
+import { Alert } from 'react-bootstrap';
 import { CongratsProps } from '../types/Guessed.app';
-import { COMPONENT_DATA_TEST_ATT, DEFAULT_SUCCESS_MSG } from '../shared/Congrats.constants';
+import { CONGRATULATIONS_SUCCESS_MSG } from '../shared/Congrats.constants';
+import { DATA_TEST_ELEMENTS } from '../shared/Testing.constants';
 
-const Congrats: React.FC<CongratsProps> = ({ success, successMessage = DEFAULT_SUCCESS_MSG }) => {
+const Congrats: React.FC<CongratsProps> = ({ success = false, successMessage = CONGRATULATIONS_SUCCESS_MSG }) => {
     return success ?
-        <div data-test={COMPONENT_DATA_TEST_ATT}>
-            <span data-test='congrats-message'>
+        <div data-test={DATA_TEST_ELEMENTS.CONGRATS_COMPONENT}>
+            <Alert variant='success' data-test={DATA_TEST_ELEMENTS.CONGRATS_MESSAGE}>
                 {successMessage}
-            </span>
+            </Alert>
         </div>
-    : <div data-test={COMPONENT_DATA_TEST_ATT}/>
+    : <div data-test={DATA_TEST_ELEMENTS.CONGRATS_COMPONENT}/>
 };
 
 export default Congrats;

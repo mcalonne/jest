@@ -1,12 +1,7 @@
 import { shallow, ShallowWrapper } from 'enzyme';
-import { findTestAtt } from './testUtils';
+import { findGuessedWordsComponent, findGuessedInstructions, findGuessedWords, findGuessedWordNodes } from './testUtils';
 import GuessedWords from '../components/GuessedWords';
-import { COMPONENT_DATA_TEST_ATT, 
-        GUESSED_INSTRUCTION_DATA_TEST_ATT,
-        GUESSED_WORDS_DATA_TEST_ATT,
-        GUESSED_WORD_DATA_TEST_ATT,
-        GUESS_INSTRUCTIONS_MSG 
-} from '../shared/GuessedWorlds.constants';
+import { GUESS_INSTRUCTIONS_MSG } from '../shared/Congrats.constants';
 
 const defaultProps = {
     guessedWords: [
@@ -27,17 +22,15 @@ describe('if there are no words guessed', () => {
     });
     
     it('renders without errors', () => {
-        const component = findTestAtt(wrapper, COMPONENT_DATA_TEST_ATT);
+        const component = findGuessedWordsComponent(wrapper);
         expect(component.length).toBe(1);
     });
 
     test('renders instructions to guess the word', () => {
-        const instructions = findTestAtt(wrapper, GUESSED_INSTRUCTION_DATA_TEST_ATT);
+        const instructions = findGuessedInstructions(wrapper);
         expect(instructions.text().length).not.toBe(0);
         expect(instructions.text()).toEqual(GUESS_INSTRUCTIONS_MSG);
     })
-
-
 });
 
 describe('if there are words guessed', () => {
@@ -53,17 +46,17 @@ describe('if there are words guessed', () => {
     });
 
     it('renders without errors', () => {
-        const component = findTestAtt(wrapper, COMPONENT_DATA_TEST_ATT);
+        const component = findGuessedWordsComponent(wrapper);
         expect(component.length).toBe(1);
     });
 
     it('renders the guessed words section', () => {
-        const guessedWordsNode = findTestAtt(wrapper, GUESSED_WORDS_DATA_TEST_ATT);
+        const guessedWordsNode = findGuessedWords(wrapper);
         expect(guessedWordsNode.length).toBe(1);
     });
 
     it('renders the correct number of guessed word element', () => {
-        const guessedWordNodes = findTestAtt(wrapper, GUESSED_WORD_DATA_TEST_ATT);
+        const guessedWordNodes = findGuessedWordNodes(wrapper);
         expect(guessedWordNodes.length).toBe(guessedWords.length);
     });
 });

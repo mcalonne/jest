@@ -1,18 +1,24 @@
-import { GuessedWordsProps } from '../types/Guessed.app';
-import { COMPONENT_DATA_TEST_ATT, 
-        GUESSED_INSTRUCTION_DATA_TEST_ATT, 
-        GUESSED_WORDS_DATA_TEST_ATT,
-        GUESSED_WORD_DATA_TEST_ATT,
-        GUESS_INSTRUCTIONS_MSG 
-} from '../shared/GuessedWorlds.constants';
+import { Table } from 'react-bootstrap';
+import { GuessedWord, GuessedWordsProps } from '../types/Guessed.app';
+import { DATA_TEST_ELEMENTS } from '../shared/Testing.constants';
+import { GUESS_INSTRUCTIONS_MSG } from '../shared/Congrats.constants';
 
-const GuessedWords: React.FC<GuessedWordsProps> = ({ guessedWords }) => {
+const generateTableRows = (guessedWords: Array<GuessedWord>) => {
+    return guessedWords.map((guessedWord, idx) => 
+        <tr data-test={DATA_TEST_ELEMENTS.GUESSED_WORD} key={idx}>
+            <td>{guessedWord.word}</td>
+            <td>{guessedWord.lettersMatchedCount}</td>
+        </tr>
+    );
+}
+
+const GuessedWords: React.FC<GuessedWordsProps> = ({ guessedWords = [] }) => {
     const content = (
         guessedWords.length === 0 ? 
-            <span data-test={GUESSED_INSTRUCTION_DATA_TEST_ATT}>{GUESS_INSTRUCTIONS_MSG}</span> 
-            : (<div data-test={GUESSED_WORDS_DATA_TEST_ATT}>
+            <span data-test={DATA_TEST_ELEMENTS.GUESSED_INSTRUCTIONS}>{GUESS_INSTRUCTIONS_MSG}</span> 
+            : (<div data-test={DATA_TEST_ELEMENTS.GUESSED_WORDS}>
                 <h3>Guessed words</h3>
-                <table>
+                <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>Word</th>
@@ -20,13 +26,12 @@ const GuessedWords: React.FC<GuessedWordsProps> = ({ guessedWords }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        { guessedWords.map((guessedWord, idx) => <tr data-test={GUESSED_WORD_DATA_TEST_ATT} key={idx}><td>{guessedWord.word}</td><td>{guessedWord.lettersMatchedCount}</td>
-                        </tr>)}
+                        { generateTableRows(guessedWords) }
                     </tbody>
-                </table>
+                </Table>
             </div>)
     );
-    return <div data-test={COMPONENT_DATA_TEST_ATT}>{content}</div>
+    return <div data-test={DATA_TEST_ELEMENTS.GUESSED_WORDS_COMPONENT}>{content}</div>
 };
 
 export default GuessedWords;
