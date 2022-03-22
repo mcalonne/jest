@@ -2,6 +2,7 @@ import { Table } from 'react-bootstrap';
 import { GuessedWord, GuessedWordsProps } from '../types/Guessed.app';
 import { DATA_TEST_ELEMENTS } from '../shared/Testing.constants';
 import { GUESS_INSTRUCTIONS_MSG } from '../shared/Congrats.constants';
+import PropTypes from 'prop-types';
 
 const generateTableRows = (guessedWords: Array<GuessedWord>) => {
     return guessedWords.map((guessedWord, idx) => 
@@ -12,7 +13,7 @@ const generateTableRows = (guessedWords: Array<GuessedWord>) => {
     );
 }
 
-const GuessedWords: React.FC<GuessedWordsProps> = ({ guessedWords = [] }) => {
+const GuessedWords: React.FC<{ guessedWords: GuessedWord[] }> = ({ guessedWords = [] }) => {
     const content = (
         guessedWords.length === 0 ? 
             <span data-test={DATA_TEST_ELEMENTS.GUESSED_INSTRUCTIONS}>{GUESS_INSTRUCTIONS_MSG}</span> 
@@ -33,5 +34,12 @@ const GuessedWords: React.FC<GuessedWordsProps> = ({ guessedWords = [] }) => {
     );
     return <div data-test={DATA_TEST_ELEMENTS.GUESSED_WORDS_COMPONENT}>{content}</div>
 };
+
+GuessedWords.propTypes = {
+    guessedWords: PropTypes.arrayOf(PropTypes.shape({
+        word: PropTypes.string.isRequired,
+        lettersMatchedCount: PropTypes.number.isRequired
+    }).isRequired).isRequired
+}
 
 export default GuessedWords;
